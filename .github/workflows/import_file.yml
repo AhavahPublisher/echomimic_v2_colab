@@ -1,0 +1,33 @@
+name: Import Hugging Face File
+
+on:
+  workflow_dispatch:  # Manually triggered
+
+jobs:
+  download-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Download File from Hugging Face
+        run: |
+          mkdir -p pretrained_weights
+          wget -O pretrained_weights/denoising_unet.pth https://huggingface.co/BadToBest/EchoMimicV2/resolve/main/denoising_unet.pth
+
+      - name: Set Up Git User
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+      - name: Track File with Git LFS
+        run: |
+          git lfs install
+          git lfs track "pretrained_weights/denoising_unet.pth"
+          git add .gitattributes pretrained_weights/denoising_unet.pth
+          git commit -m "Added denoising_unet.pth from Hugging Face"
+
+      - name: Push Changes
+        run: |
+          git push origin main
