@@ -14,7 +14,7 @@ jobs:
       - name: Download File from Hugging Face
         run: |
           mkdir -p pretrained_weights
-          wget -O pretrained_weights/sd-vae-ft-mse/diffusion_pytorch_model.bin https://huggingface.co/stabilityai/sd-vae-ft-mse/tree/main/diffusion_pytorch_model.bin
+          wget -O pretrained_weights/sd-vae-ft-mse/diffusion_pytorch_model.bin https://huggingface.co/stabilityai/sd-vae-ft-mse/resolve/main/diffusion_pytorch_model.bin
 
 
       - name: Set Up Git User
