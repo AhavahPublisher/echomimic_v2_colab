@@ -1,3 +1,11 @@
+# PyTorch and related dependencies
+torch==2.5.1
+torchvision==0.20.1
+torchaudio==2.5.1
+xformers==0.0.28.post3 --index-url https://download.pytorch.org/whl/cu124
+torchao --index-url https://download.pytorch.org/whl/nightly/cu124
+
+# Core dependencies
 transformers>=4.46.3
 diffusers==0.31.0
 torchmetrics
@@ -25,7 +33,10 @@ scipy==1.14.1
 torchdiffeq==0.2.5
 torchsde==0.2.6
 mlflow==2.18.0
-controlnet-aux==0.0.9
+
+# Additional dependencies
+facenet_pytorch==2.6.0 --no-deps
+triton
 ffmpeg-python
 soundfile
 mediapipe
@@ -33,4 +44,3 @@ IPython
 scenedetect
 moviepy==1.0.3
 huggingface_hub==0.26.2
-mediapipe

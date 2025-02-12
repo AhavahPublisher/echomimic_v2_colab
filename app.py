@@ -1,4 +1,13 @@
 import os
+
+os.environ["PULSE_SERVER"] = ""
+os.environ["ALSA_CONFIG_PATH"] = "/dev/null"
+os.environ["SDL_AUDIODRIVER"] = "dummy"
+os.environ["AUDIODEV"] = "null"
+os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
+
 import random
 from pathlib import Path
 import numpy as np
@@ -19,12 +28,13 @@ from datetime import datetime
 from torchao.quantization import quantize_, int8_weight_only
 import gc
 
-total_vram_in_gb = torch.cuda.get_device_properties(0).total_memory / 1073741824
-print(f'\033[32mCUDA版本：{torch.version.cuda}\033[0m')
-print(f'\033[32mPytorch版本：{torch.__version__}\033[0m')
-print(f'\033[32m显卡型号：{torch.cuda.get_device_name()}\033[0m')
-print(f'\033[32m显存大小：{total_vram_in_gb:.2f}GB\033[0m')
-print(f'\033[32m精度：float16\033[0m')
+print(f'-----------------------------------------------------------------------------------------------------------')
+print(f'\033[32m CUDAVersion：{torch.version.cuda}\033[0m')
+print(f'\033[32m Pytorch Version：{torch.__version__}\033[0m')
+print(f'\033[32m Graphics card model：{torch.cuda.get_device_name()}\033[0m')
+print(f'\033[32m Video memory size：{(torch.cuda.get_device_properties(0).total_memory / 1073741824):.2f}GB\033[0m')
+print(f'\033[32m Accuracy：float16\033[0m')
+
 dtype = torch.float16
 if torch.cuda.is_available():
         device = "cuda"
@@ -53,7 +63,7 @@ def generate(image_input, audio_input, pose_input, width, height, length, steps,
     vae = AutoencoderKL.from_pretrained("./pretrained_weights/sd-vae-ft-mse").to(device, dtype=dtype)
     if quantization_input:
         quantize_(vae, int8_weight_only())
-        print("使用int8量化")
+        print("Quantize using int8")
 
     ## reference net init
     reference_unet = UNet2DConditionModel.from_pretrained("./pretrained_weights/sd-image-variations-diffusers", subfolder="unet", use_safetensors=False).to(dtype=dtype, device=device)
@@ -213,65 +223,41 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:
     gr.Markdown("""
             <div>
                 <h2 style="font-size: 30px;text-align: center;">EchoMimicV2</h2>
-            </div>
-            <div style="text-align: center;">
-                <a href="https://github.com/antgroup/echomimic_v2">🌐 Github</a> |
-                <a href="https://arxiv.org/abs/2411.10061">📜 arXiv </a>
-            </div>
-            <div style="text-align: center; font-weight: bold; color: red;">
-                ⚠️ 该演示仅供学术研究和体验使用。
-            </div>
-            
+            </div>      
             """)
     with gr.Column():
         with gr.Row():
             with gr.Column():
                 with gr.Group():
-                    image_input = gr.Image(label="图像输入（自动缩放）", type="filepath")
-                    audio_input = gr.Audio(label="音频输入", type="filepath")
-                    pose_input = gr.Textbox(label="姿态输入（目录地址）", placeholder="请输入姿态数据的目录地址", value="assets/halfbody_demo/pose/fight")
+                    image_input = gr.Image(label="Image input (auto scaling）", type="filepath")
+                    audio_input = gr.Audio(label="Audio input", type="filepath")
+                    pose_input = gr.Textbox(label="Gesture input (directory address)", placeholder="Please enter the directory address of the posture data", value="assets/halfbody_demo/pose/good"")
                 with gr.Group():
                     with gr.Row():
-                        width = gr.Number(label="宽度（默认768，请选择默认值）", value=768)
-                        height = gr.Number(label="高度（默认768，请选择默认值）", value=768)
-                        length = gr.Number(label="视频长度，推荐120）", value=120)
+                        width = gr.Number(label="Width (default 768, please select default value)", value=768)
+                        height = gr.Number(label="Height (default 768, please choose default value)", value=768)
+                        length = gr.Number(label="Video length, recommended 120)", value=120)
                     with gr.Row():
-                        steps = gr.Number(label="步骤（默认30）", value=30)
-                        sample_rate = gr.Number(label="采样率（默认16000）", value=16000)
-                        cfg = gr.Number(label="cfg（推荐2.5）", value=2.5, step=0.1)
+                        steps = gr.Number(label="Steps (default 30)", value=30)
+                        sample_rate = gr.Number(label="Sampling Rate (default 16000)", value=16000)
+                        cfg = gr.Number(label="CFG (2.5 recommended)", value=2.5, step=0.1)
                     with gr.Row():
-                        fps = gr.Number(label="帧率（默认24）", value=24)
-                        context_frames = gr.Number(label="上下文框架（默认12）", value=12)
-                        context_overlap = gr.Number(label="上下文重叠（默认3）", value=3)
+                        fps = gr.Number(label="Frame Rate (default 24)", value=24)
+                        context_frames = gr.Number(label="Context Frames (default 12)", value=12)
+                        context_overlap = gr.Number(label="Context Overlap (default 3)", value=3)
                     with gr.Row():
-                        quantization_input = gr.Checkbox(label="int8量化（推荐显存12G的用户开启，并使用不超过5秒的音频）", value=False)
-                        seed = gr.Number(label="种子(-1为随机)", value=-1)
-                generate_button = gr.Button("🎬 生成视频")
+                        quantization_input = gr.Checkbox(label="int8 quantization (recommended for users with 12G of video memory to enable it and use audio of no more than 5 seconds)", value=False)
+                        seed = gr.Number(label="Seed (-1 is random)", value=-1)
+                generate_button = gr.Button("🎬 Generate video")
             with gr.Column():
-                video_output = gr.Video(label="输出视频")
-                seed_text = gr.Textbox(label="种子", interactive=False, visible=False)
-        gr.Examples(
-            examples=[
-                ["EMTD_dataset/ref_imgs_by_FLUX/man/0003.png", "assets/halfbody_demo/audio/chinese/fighting.wav"],
-                ["EMTD_dataset/ref_imgs_by_FLUX/woman/0033.png", "assets/halfbody_demo/audio/chinese/good.wav"],
-                ["EMTD_dataset/ref_imgs_by_FLUX/man/0010.png", "assets/halfbody_demo/audio/chinese/news.wav"],
-                ["EMTD_dataset/ref_imgs_by_FLUX/man/1168.png", "assets/halfbody_demo/audio/chinese/no_smoking.wav"],
-                ["EMTD_dataset/ref_imgs_by_FLUX/woman/0057.png", "assets/halfbody_demo/audio/chinese/ultraman.wav"],
-                ["EMTD_dataset/ref_imgs_by_FLUX/man/0001.png", "assets/halfbody_demo/audio/chinese/echomimicv2_man.wav"],
-                ["EMTD_dataset/ref_imgs_by_FLUX/woman/0077.png", "assets/halfbody_demo/audio/chinese/echomimicv2_woman.wav"],
-            ],
-            inputs=[image_input, audio_input],  
-            label="预设人物及音频",
-        )
-    
+                video_output = gr.Video(label="Output video")
+                seed_text = gr.Textbox(label="Seed", interactive=False, visible=False)
     generate_button.click(
         generate,
         inputs=[image_input, audio_input, pose_input, width, height, length, steps, sample_rate, cfg, fps, context_frames, context_overlap, quantization_input, seed],
         outputs=[video_output, seed_text],
     )
 
-
-
 if __name__ == "__main__":
     demo.queue()
-    demo.launch(inbrowser=True)
+    demo.launch(inbrowser=True, share=True)

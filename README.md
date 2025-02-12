@@ -1,4 +1,4 @@
-<h1 align='center'>EchoMimicV2: Towards Striking, Simplified, and Semi-Body Human Animation</h1>
+<h1 align='center'>EchoMimicV2</h1>
 
 <div align='center'>
     <a href='https://github.com/mengrang' target='_blank'>Rang Meng</a><sup></sup>&emsp;
@@ -7,40 +7,20 @@
     <a href='https://github.com/' target='_blank'>Chenguang Ma</a><sup></sup>
 </div>
 
-
-<div align='center'>
-Terminal Technology Department, Alipay, Ant Group.
-</div>
+<div align='center'>Terminal Technology Department, Alipay, Ant Group.</div>
 <br>
 <div align='center'>
     <a href='https://antgroup.github.io/ai/echomimic_v2/'><img src='https://img.shields.io/badge/Project-Page-blue'></a>
     <a href='https://huggingface.co/BadToBest/EchoMimicV2'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Model-yellow'></a>
-    <!--<a href='https://antgroup.github.io/ai/echomimic_v2/'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Demo-yellow'></a>-->
     <a href='https://modelscope.cn/models/BadToBest/EchoMimicV2'><img src='https://img.shields.io/badge/ModelScope-Model-purple'></a>
-    <!--<a href='https://antgroup.github.io/ai/echomimic_v2/'><img src='https://img.shields.io/badge/ModelScope-Demo-purple'></a>-->
     <a href='https://arxiv.org/abs/2411.10061'><img src='https://img.shields.io/badge/Paper-Arxiv-red'></a>
     <a href='https://github.com/antgroup/echomimic_v2/blob/main/assets/halfbody_demo/wechat_group.png'><img src='https://badges.aleen42.com/src/wechat.svg'></a>
+    <a href='https://github.com/antgroup/echomimic'><img src='https://badges.aleen42.com/src/wechat.svg'></a>
 </div>
-<div align='center'>
-    <a href='https://github.com/antgroup/echomimic_v2/discussions/53'><img src='https://img.shields.io/badge/English-Common Problems-orange'></a>
-    <a href='https://github.com/antgroup/echomimic_v2/discussions/40'><img src='https://img.shields.io/badge/中文版-常见问题汇总-orange'></a>
-</div>
-
-## &#x1F680; EchoMimic Series
-* EchoMimicV1: Lifelike Audio-Driven Portrait Animations through Editable Landmark Conditioning. [GitHub](https://github.com/antgroup/echomimic)
-* EchoMimicV2: Towards Striking, Simplified, and Semi-Body Human Animation. [GitHub](https://github.com/antgroup/echomimic_v2)
 
 ## &#x1F4E3; Updates
-* [2025.01.16] 🔥 Please check out the [discussions](https://github.com/antgroup/echomimic_v2/discussions) to learn how to start EchoMimicV2.
-* [2025.01.16] 🚀🔥 [GradioUI for Accelerated EchoMimicV2](https://github.com/antgroup/echomimic_v2/blob/main/app_acc.py) is now available.
-* [2025.01.03] 🚀🔥 **One Minute is All You Need to Generate Video**. [Accelerated EchoMimicV2](https://github.com/antgroup/echomimic_v2/blob/main/infer_acc.py) are released. The inference speed can be improved by 9x (from ~7mins/120frames to ~50s/120frames on A100 GPU).
-* [2024.12.16] 🔥 [RefImg-Pose Alignment Demo](https://github.com/antgroup/echomimic_v2/blob/main/demo.ipynb) is now available, which involves aligning reference image, extracting pose from driving video, and generating video.
-* [2024.11.27] 🔥 [Installation tutorial](https://www.youtube.com/watch?v=2ab6U1-nVTQ) is now available. Thanks [AiMotionStudio](https://www.youtube.com/@AiMotionStudio) for the contribution.
-* [2024.11.22] 🔥 [GradioUI](https://github.com/antgroup/echomimic_v2/blob/main/app.py) is now available. Thanks @gluttony-10 for the contribution.
-* [2024.11.22] 🔥 [ComfyUI](https://github.com/smthemex/ComfyUI_EchoMimic) is now available. Thanks @smthemex for the contribution.
-* [2024.11.21] 🔥 We release the EMTD dataset list and processing scripts.
-* [2024.11.21] 🔥 We release our [EchoMimicV2](https://github.com/antgroup/echomimic_v2) codes and models.
-* [2024.11.15] 🔥 Our [paper](https://arxiv.org/abs/2411.10061) is in public on arxiv.
+* [2025.02.11] 🔥 Attribution to the authors of EchoMimicV2: Rang Meng, Xingyu Zhang, Yuming Li and Chenguang Ma.
+
 
 ## &#x1F305; Gallery
 ### Introduction
