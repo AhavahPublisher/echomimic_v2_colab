@@ -14,7 +14,7 @@ jobs:
       - name: Download File from Hugging Face
         run: |
           mkdir -p pretrained_weights
-          wget -O pretrained_weights/motion_module.pth https://huggingface.co/BadToBest/EchoMimicV2/resolve/main/motion_module.pth
+          wget -O pretrained_weights/pose_encoder.pth https://huggingface.co/BadToBest/EchoMimicV2/resolve/main/pose_encoder.pth
 
 
       - name: Set Up Git User
@@ -25,8 +25,8 @@ jobs:
       - name: Track File with Git LFS
         run: |
           git lfs install
-          git lfs track "pretrained_weights/motion_module.pth"
-          git add .gitattributes pretrained_weights/motion_module.pth
+          git lfs track "pretrained_weights/pose_encoder.pth"
+          git add .gitattributes pretrained_weights/pose_encoder.pth
           git commit -m "Added reference_unet.pth from Hugging Face"
 
       - name: Push Changes
