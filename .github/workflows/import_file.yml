@@ -25,9 +25,9 @@ jobs:
       - name: Track File with Git LFS
         run: |
           git lfs install
-          git lfs track "pretrained_weights/denoising_unet.pth"
-          git add .gitattributes pretrained_weights/denoising_unet.pth
-          git commit -m "Added denoising_unet.pth from Hugging Face"
+          git lfs track "pretrained_weights/reference_unet.pth"
+          git add .gitattributes pretrained_weights/reference_unet.pth
+          git commit -m "Added reference_unet.pth from Hugging Face"
 
       - name: Push Changes
         run: |
